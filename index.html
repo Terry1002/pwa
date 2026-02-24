@@ -6,66 +6,52 @@
     <title>RC 赛道营运系统</title>
     <link rel="manifest" href="manifest.json">
     <style>
-        /* 赛车主题色板 */
+        /* CSS 样式与上一版完全一致，保持赛车风格不变 */
         :root { --primary: #e53935; --primary-dark: #b71c1c; --bg: #f4f4f8; --card-bg: #ffffff; --text: #2c3e50; --accent: #ff9800; }
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, 'Helvetica Neue', sans-serif; }
         body { background-color: var(--bg); color: var(--text); padding-bottom: 75px; }
-        
         .header-container { position: sticky; top: 0; z-index: 100; }
         .header { background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color: white; text-align: center; padding: 16px; font-size: 19px; font-weight: 800; letter-spacing: 1px; font-style: italic; }
         .checkered-bar { height: 6px; background: repeating-linear-gradient(45deg, #111 0, #111 10px, #fff 10px, #fff 20px); }
-        
-        /* 登录页面专属样式 */
         #loginView { display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100vh; background: linear-gradient(135deg, #2c3e50, #000000); padding: 20px; position: fixed; top: 0; left: 0; width: 100%; z-index: 999; }
         .login-card { background: white; width: 100%; max-width: 350px; padding: 30px 20px; border-radius: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.5); text-align: center; border-top: 5px solid var(--primary); }
         .login-logo { font-size: 40px; margin-bottom: 10px; }
         .login-title { font-size: 22px; font-weight: 900; font-style: italic; color: #111; margin-bottom: 20px; }
-        
         .container { padding: 15px; display: none; animation: fadeIn 0.3s ease; }
         .active-view { display: block; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
-        
         .card { background: var(--card-bg); border-radius: 12px; padding: 18px; margin-bottom: 15px; box-shadow: 0 4px 12px rgba(0,0,0,0.06); border-top: 3px solid transparent; }
         .card-red-top { border-top-color: var(--primary); }
-        
         h3 { font-size: 17px; margin-bottom: 12px; display: flex; align-items: center; gap: 6px; color: #1a252f; }
-        
         input { width: 100%; padding: 14px 14px; margin: 8px 0; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 16px; transition: border-color 0.2s; background: #fafafa; text-align: center; }
         input:focus { outline: none; border-color: var(--primary); background: #fff; }
-        
         button { width: 100%; padding: 14px; border: none; border-radius: 8px; font-size: 16px; font-weight: bold; color: white; cursor: pointer; margin-top: 10px; transition: transform 0.1s; }
         button:active { transform: scale(0.98); }
         .btn-primary { background: linear-gradient(135deg, #e53935, #c62828); box-shadow: 0 4px 10px rgba(229, 57, 53, 0.3); }
         .btn-play { background: linear-gradient(135deg, #34a853, #2e7d32); box-shadow: 0 4px 10px rgba(52, 168, 83, 0.3); }
         .btn-outline { background: white; color: var(--text); border: 2px solid #ddd; }
-        
         .customer-info { margin-top: 15px; background: #f8f9fa; border-radius: 8px; padding: 15px; }
         .info-row { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 15px; color: #555; }
         .count-highlight { color: var(--accent); font-size: 24px; font-weight: 900; font-style: italic; }
-        
         .record-list { margin-top: 20px; }
         .record-list h4 { font-size: 15px; color: #7f8c8d; margin-bottom: 10px; border-bottom: 1px solid #eee; padding-bottom: 5px; }
         .record-item { display: flex; justify-content: space-between; align-items: center; font-size: 14px; padding: 10px 0; border-bottom: 1px dashed #ecf0f1; }
         .record-time { color: #95a5a6; font-size: 13px; font-family: monospace; }
         .record-recharge { color: #2e7d32; font-weight: bold; background: #e8f5e9; padding: 2px 6px; border-radius: 4px; font-size: 12px; }
         .record-usage { color: #c62828; font-weight: bold; background: #ffebee; padding: 2px 6px; border-radius: 4px; font-size: 12px; }
-
         .customer-list-item { display: flex; justify-content: space-between; align-items: center; padding: 16px 0; border-bottom: 1px solid #f0f0f0; cursor: pointer; }
         .cl-name { font-size: 16px; font-weight: bold; color: #2c3e50; }
         .cl-phone { font-size: 13px; color: #7f8c8d; margin-top: 4px; font-family: monospace; }
         .cl-count { font-size: 20px; font-weight: 900; color: var(--accent); text-align: right; font-style: italic; }
         .cl-action { font-size: 12px; color: var(--primary); margin-top: 4px; font-weight: bold; }
-
-        .tab-bar { position: fixed; bottom: 0; width: 100%; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); display: flex; border-top: 1px solid #e0e0e0; padding-bottom: env(safe-area-inset-bottom); display: none; /* 登录前隐藏 */ }
+        .tab-bar { position: fixed; bottom: 0; width: 100%; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); display: none; border-top: 1px solid #e0e0e0; padding-bottom: env(safe-area-inset-bottom); box-shadow: 0 -2px 10px rgba(0,0,0,0.03); }
         .tab-item { flex: 1; text-align: center; padding: 12px 0; font-size: 12px; color: #95a5a6; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 4px; }
         .tab-icon { font-size: 20px; }
         .tab-item.active { color: var(--primary); font-weight: bold; }
-
+        .tab-item.active .tab-icon { transform: scale(1.1); }
         .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 15px; }
         .stat-box { background: var(--card-bg); padding: 18px 10px; border-radius: 12px; text-align: center; box-shadow: 0 4px 12px rgba(0,0,0,0.04); }
         .stat-val { font-size: 26px; font-weight: 900; color: var(--primary); margin-top: 8px; font-style: italic; }
-        
-        /* 隐藏主应用区，直到登录成功 */
         #appContent { display: none; }
     </style>
 </head>
@@ -103,29 +89,29 @@
                     </div>
                 </div>
                 <div style="display: flex; gap: 12px; margin-top: 20px;">
-                    <button class="btn-play" onclick="deductCount()">🏁 下场发车 (扣次)</button>
+                    <button class="btn-play" onclick="deductCount()" id="btnDeduct">🏁 下场发车 (扣次)</button>
                     <button class="btn-outline" onclick="toggleRecharge()">⛽ 购买票卷</button>
                 </div>
                 <div id="rechargePanel" style="display: none; background: #fff3e0; padding: 15px; border-radius: 8px; margin-top: 15px; border: 1px solid #ffe0b2;">
                     <h4 style="color: #e65100; margin-bottom: 10px;">进站补给 (充值)</h4>
                     <input type="number" id="rechargeAmount" placeholder="支付金额 (元)">
                     <input type="number" id="rechargeCount" placeholder="增加节数/次数">
-                    <button class="btn-primary" onclick="submitRecharge()" style="background: linear-gradient(135deg, #f57c00, #e65100);">确认入账</button>
+                    <button class="btn-primary" onclick="submitRecharge()" id="btnRecharge" style="background: linear-gradient(135deg, #f57c00, #e65100);">确认入账</button>
                 </div>
                 <div class="record-list" id="recordList"></div>
             </div>
         </div>
 
         <div id="customersView" class="container">
-            <div class="card card-red-top">
+             <div class="card card-red-top">
                 <h3>📝 新秀车手注册</h3>
                 <input type="tel" id="regPhone" placeholder="输入手机号 (必填)" maxlength="11">
                 <input type="text" id="regName" placeholder="输入车手姓名或花名">
-                <button class="btn-primary" onclick="registerCustomer()">建档入库</button>
+                <button class="btn-primary" onclick="registerCustomer()" id="btnRegister">建档入库</button>
             </div>
             <div class="card">
                 <h3>🏆 围场车手名单</h3>
-                <div id="allCustomersList"></div>
+                <div id="allCustomersList">正在加载赛道数据...</div>
             </div>
         </div>
 
@@ -169,103 +155,137 @@
     </div>
 
 <script>
-    // --- 登录验证逻辑 ---
+    // 🚦 核心配置：接入你的真实云端大脑
+    const API_BASE = 'https://rc-api.fan-terry.workers.dev';
+    let currentPhone = null;
+
+    // --- 登录逻辑 ---
     function handleLogin() {
         const code = document.getElementById('authCode').value;
-        // 演示阶段使用前端硬编码，后期接入 Cloudflare Worker 后这里会发起 fetch() 请求验证
         if (code === '8888') {
             document.getElementById('loginView').style.display = 'none';
             document.getElementById('appContent').style.display = 'block';
             document.getElementById('bottomTabBar').style.display = 'flex';
-            // 登录成功后记录状态，刷新不用重登（真实环境中这里会存 JWT Token）
             sessionStorage.setItem('isLoggedIn', 'true'); 
         } else {
             alert('❌ 授权码错误，拒绝访问！');
         }
     }
-
-    // 检查是否已经登录过
     if (sessionStorage.getItem('isLoggedIn') === 'true') {
         document.getElementById('loginView').style.display = 'none';
         document.getElementById('appContent').style.display = 'block';
         document.getElementById('bottomTabBar').style.display = 'flex';
     }
 
-    // --- 业务逻辑 (与之前完全相同) ---
-    let customers = JSON.parse(localStorage.getItem('rc_customers')) || {};
-    let rechargeRecords = JSON.parse(localStorage.getItem('rc_recharges')) || [];
-    let usageRecords = JSON.parse(localStorage.getItem('rc_usages')) || [];
-    let currentPhone = null;
+    // --- 辅助函数：网络请求封装 ---
+    async function apiGet(path) {
+        const response = await fetch(API_BASE + path);
+        const data = await response.json();
+        if (!response.ok) throw new Error(data.error || '请求失败');
+        return data;
+    }
+
+    async function apiPost(path, bodyData) {
+        const response = await fetch(API_BASE + path, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(bodyData)
+        });
+        const data = await response.json();
+        if (!response.ok) throw new Error(data.error || '请求失败');
+        return data;
+    }
 
     function formatTime(timestamp) {
         const d = new Date(timestamp);
         return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')} ${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}:${String(d.getSeconds()).padStart(2,'0')}`;
     }
 
-    function handleSearch() {
+    // --- 核心业务逻辑 (已接入 API) ---
+
+    // 1. 查询车手
+    async function handleSearch() {
         const phone = document.getElementById('phoneInput').value.trim();
         if (phone.length !== 11) return alert('请输入完整的11位手机号');
-        if (customers[phone]) {
+
+        try {
+            const data = await apiGet(`/api/customer?phone=${phone}`);
             currentPhone = phone;
-            showCustomerPanel(customers[phone]);
-        } else {
+            showCustomerPanel(data.customer, data.recharges, data.usages);
+        } catch (err) {
             alert('数据库中未找到该车手！请前往“车手库”为您办理注册。');
             document.getElementById('customerPanel').style.display = 'none';
         }
     }
 
-    function registerCustomer() {
+    // 2. 注册新车手
+    async function registerCustomer() {
         const phone = document.getElementById('regPhone').value.trim();
         const name = document.getElementById('regName').value.trim() || '神秘车手';
         if (phone.length !== 11) return alert('请输入有效的11位手机号');
-        if (customers[phone]) return alert('该通讯频段（手机号）已被注册！');
-        customers[phone] = { phone, name, count: 0, createTime: Date.now() };
-        saveData();
-        document.getElementById('regPhone').value = '';
-        document.getElementById('regName').value = '';
-        alert('新秀车手建档成功！');
-        renderAllCustomers();
+        
+        const btn = document.getElementById('btnRegister');
+        btn.innerText = '注册中...'; btn.disabled = true;
+
+        try {
+            await apiPost('/api/customer', { phone, name });
+            alert('新秀车手建档成功！');
+            document.getElementById('regPhone').value = '';
+            document.getElementById('regName').value = '';
+            renderAllCustomers(); // 刷新列表
+        } catch (err) {
+            alert('注册失败: ' + err.message);
+        } finally {
+            btn.innerText = '建档入库'; btn.disabled = false;
+        }
     }
 
-    function renderAllCustomers() {
+    // 3. 渲染所有车手列表
+    async function renderAllCustomers() {
         const listDiv = document.getElementById('allCustomersList');
-        const customerArray = Object.values(customers).sort((a, b) => b.createTime - a.createTime);
-        if (customerArray.length === 0) {
-            listDiv.innerHTML = '<div style="text-align:center; color:#bdc3c7; padding:30px 0;">当前赛道空无一人</div>';
-            return;
+        listDiv.innerHTML = '<div style="text-align:center; color:#bdc3c7; padding:30px 0;">📡 正在从云端读取数据...</div>';
+        
+        try {
+            const customerArray = await apiGet('/api/customers');
+            if (customerArray.length === 0) {
+                listDiv.innerHTML = '<div style="text-align:center; color:#bdc3c7; padding:30px 0;">当前赛道空无一人</div>';
+                return;
+            }
+            let html = '';
+            customerArray.forEach(c => {
+                html += `<div class="customer-list-item" onclick="jumpToWorkspace('${c.phone}')"><div><div class="cl-name">${c.name}</div><div class="cl-phone">${c.phone}</div></div><div><div class="cl-count">${c.count} <span style="font-size:12px;font-style:normal;color:#7f8c8d;">次</span></div><div class="cl-action">进入Pit房 &gt;</div></div></div>`;
+            });
+            listDiv.innerHTML = html;
+        } catch (err) {
+            listDiv.innerHTML = `<div style="text-align:center; color:#e53935; padding:30px 0;">获取数据失败: ${err.message}</div>`;
         }
-        let html = '';
-        customerArray.forEach(c => {
-            html += `<div class="customer-list-item" onclick="jumpToWorkspace('${c.phone}')"><div><div class="cl-name">${c.name}</div><div class="cl-phone">${c.phone}</div></div><div><div class="cl-count">${c.count} <span style="font-size:12px;font-style:normal;color:#7f8c8d;">次</span></div><div class="cl-action">进入Pit房 &gt;</div></div></div>`;
-        });
-        listDiv.innerHTML = html;
     }
 
     function jumpToWorkspace(phone) {
         switchTab('workspace');
         document.getElementById('phoneInput').value = phone;
-        currentPhone = phone;
-        showCustomerPanel(customers[phone]);
+        // 自动触发查询
+        handleSearch();
     }
 
-    function showCustomerPanel(customer) {
+    // 4. 展示顾客面板和明细
+    function showCustomerPanel(customer, recharges, usages) {
         document.getElementById('customerPanel').style.display = 'block';
         document.getElementById('rechargePanel').style.display = 'none';
         document.getElementById('cName').innerText = customer.name;
         document.getElementById('cPhone').innerText = customer.phone;
         document.getElementById('cCount').innerText = customer.count;
-        renderCustomerRecords(customer.phone);
-    }
-
-    function renderCustomerRecords(phone) {
+        
         const recordList = document.getElementById('recordList');
-        const userRecharges = rechargeRecords.filter(r => r.phone === phone).map(r => ({ ...r, type: 'recharge' }));
-        const userUsages = usageRecords.filter(u => u.phone === phone).map(u => ({ ...u, type: 'usage' }));
-        const combinedRecords = [...userRecharges, ...userUsages].sort((a, b) => b.time - a.time);
+        const _recharges = recharges.map(r => ({ ...r, type: 'recharge' }));
+        const _usages = usages.map(u => ({ ...u, type: 'usage' }));
+        const combinedRecords = [..._recharges, ..._usages].sort((a, b) => b.time - a.time);
+
         if (combinedRecords.length === 0) {
             recordList.innerHTML = '<div style="text-align:center; color:#bdc3c7; font-size:13px; margin-top:20px;">暂无赛道遥测记录</div>';
             return;
         }
+
         let html = '<h4>⏱️ 进站及下场遥测日志</h4>';
         combinedRecords.forEach(record => {
             const timeStr = formatTime(record.time);
@@ -283,35 +303,47 @@
         panel.style.display = panel.style.display === 'none' ? 'block' : 'none';
     }
 
-    function submitRecharge() {
+    // 5. 充值提交
+    async function submitRecharge() {
         const amount = parseFloat(document.getElementById('rechargeAmount').value);
         const count = parseInt(document.getElementById('rechargeCount').value);
         if (!amount || !count) return alert('请输入有效的油资(金额)和节数(次数)');
-        customers[currentPhone].count += count;
-        rechargeRecords.push({ phone: currentPhone, amount, addCount: count, time: Date.now() });
-        saveData();
-        showCustomerPanel(customers[currentPhone]); 
-        document.getElementById('rechargeAmount').value = '';
-        document.getElementById('rechargeCount').value = '';
-        alert('⛽ 补给入账成功！');
-    }
+        
+        const btn = document.getElementById('btnRecharge');
+        btn.innerText = '处理中...'; btn.disabled = true;
 
-    function deductCount() {
-        if (customers[currentPhone].count <= 0) return alert('剩余节数不足，请先引导车手进站补给（充值）！');
-        if(confirm('绿灯亮起！确认发车并扣除 1 次游玩节数吗？')) {
-            customers[currentPhone].count -= 1;
-            usageRecords.push({ phone: currentPhone, time: Date.now() });
-            saveData();
-            showCustomerPanel(customers[currentPhone]); 
+        try {
+            await apiPost('/api/recharge', { phone: currentPhone, amount, count });
+            alert('⛽ 补给入账成功！');
+            document.getElementById('rechargeAmount').value = '';
+            document.getElementById('rechargeCount').value = '';
+            // 充值成功后，重新获取该车手的最新数据刷新面板
+            await handleSearch();
+        } catch (err) {
+            alert('充值失败: ' + err.message);
+        } finally {
+            btn.innerText = '确认入账'; btn.disabled = false;
         }
     }
 
-    function saveData() {
-        localStorage.setItem('rc_customers', JSON.stringify(customers));
-        localStorage.setItem('rc_recharges', JSON.stringify(rechargeRecords));
-        localStorage.setItem('rc_usages', JSON.stringify(usageRecords));
+    // 6. 扣次发车
+    async function deductCount() {
+        if(confirm('绿灯亮起！确认发车并扣除 1 次游玩节数吗？')) {
+            const btn = document.getElementById('btnDeduct');
+            btn.innerText = '请稍后...'; btn.disabled = true;
+            try {
+                await apiPost('/api/usage', { phone: currentPhone });
+                // 扣减成功后，重新获取数据刷新面板
+                await handleSearch();
+            } catch (err) {
+                alert('发车失败: ' + err.message);
+            } finally {
+                btn.innerText = '🏁 下场发车 (扣次)'; btn.disabled = false;
+            }
+        }
     }
 
+    // 7. 统计报表
     function initStatsDates() {
         const now = new Date();
         const firstDay = new Date(now.getFullYear(), now.getMonth(), 1);
@@ -319,17 +351,21 @@
         document.getElementById('endDate').value = now.toISOString().split('T')[0];
     }
 
-    function loadStats() {
+    async function loadStats() {
         const start = new Date(document.getElementById('startDate').value).getTime();
         const end = new Date(document.getElementById('endDate').value).setHours(23, 59, 59, 999);
-        let totalAmount = 0, totalRechargeCount = 0, totalUsageCount = 0;
-        rechargeRecords.forEach(r => { if (r.time >= start && r.time <= end) { totalAmount += r.amount; totalRechargeCount++; } });
-        usageRecords.forEach(u => { if (u.time >= start && u.time <= end) { totalUsageCount++; } });
-        document.getElementById('statAmount').innerText = totalAmount.toFixed(2);
-        document.getElementById('statRechargeCount').innerText = totalRechargeCount;
-        document.getElementById('statUsageCount').innerText = totalUsageCount;
+        
+        try {
+            const stats = await apiGet(`/api/stats?start=${start}&end=${end}`);
+            document.getElementById('statAmount').innerText = (stats.totalAmount || 0).toFixed(2);
+            document.getElementById('statRechargeCount').innerText = stats.totalRechargeCount || 0;
+            document.getElementById('statUsageCount').innerText = stats.totalUsageCount || 0;
+        } catch (err) {
+            alert('获取统计数据失败: ' + err.message);
+        }
     }
 
+    // --- Tab 页面切换 ---
     function switchTab(tab) {
         document.querySelectorAll('.tab-item').forEach(el => el.classList.remove('active'));
         document.querySelectorAll('.container').forEach(el => el.classList.remove('active-view'));
