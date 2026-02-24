@@ -290,7 +290,7 @@
         combinedRecords.forEach(record => {
             const timeStr = formatTime(record.time);
             if (record.type === 'recharge') {
-                html += `<div class="record-item"><div><span class="record-recharge">补给票卷</span><br><span class="record-time">${timeStr}</span></div><div style="text-align:right;">+${record.addCount} 次<br><span style="color:#7f8c8d;font-size:12px;">(¥${record.amount})</span></div></div>`;
+                html += `<div class="record-item"><div><span class="record-recharge">补给票卷</span><br><span class="record-time">${timeStr}</span></div><div style="text-align:right;">+${record.add_count} 次<br><span style="color:#7f8c8d;font-size:12px;">(¥${record.amount})</span></div></div>`;
             } else {
                 html += `<div class="record-item"><div><span class="record-usage">赛道发车</span><br><span class="record-time">${timeStr}</span></div><div style="font-weight:bold;color:#c62828;">-1 次</div></div>`;
             }
