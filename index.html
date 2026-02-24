@@ -11,10 +11,15 @@
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, 'Helvetica Neue', sans-serif; }
         body { background-color: var(--bg); color: var(--text); padding-bottom: 75px; }
         
-        /* 顶部带有方格旗元素的导航 */
         .header-container { position: sticky; top: 0; z-index: 100; }
         .header { background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color: white; text-align: center; padding: 16px; font-size: 19px; font-weight: 800; letter-spacing: 1px; font-style: italic; }
         .checkered-bar { height: 6px; background: repeating-linear-gradient(45deg, #111 0, #111 10px, #fff 10px, #fff 20px); }
+        
+        /* 登录页面专属样式 */
+        #loginView { display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100vh; background: linear-gradient(135deg, #2c3e50, #000000); padding: 20px; position: fixed; top: 0; left: 0; width: 100%; z-index: 999; }
+        .login-card { background: white; width: 100%; max-width: 350px; padding: 30px 20px; border-radius: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.5); text-align: center; border-top: 5px solid var(--primary); }
+        .login-logo { font-size: 40px; margin-bottom: 10px; }
+        .login-title { font-size: 22px; font-weight: 900; font-style: italic; color: #111; margin-bottom: 20px; }
         
         .container { padding: 15px; display: none; animation: fadeIn 0.3s ease; }
         .active-view { display: block; }
@@ -25,7 +30,7 @@
         
         h3 { font-size: 17px; margin-bottom: 12px; display: flex; align-items: center; gap: 6px; color: #1a252f; }
         
-        input { width: 100%; padding: 12px 14px; margin: 8px 0; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 16px; transition: border-color 0.2s; background: #fafafa; }
+        input { width: 100%; padding: 14px 14px; margin: 8px 0; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 16px; transition: border-color 0.2s; background: #fafafa; text-align: center; }
         input:focus { outline: none; border-color: var(--primary); background: #fff; }
         
         button { width: 100%; padding: 14px; border: none; border-radius: 8px; font-size: 16px; font-weight: bold; color: white; cursor: pointer; margin-top: 10px; transition: transform 0.1s; }
@@ -38,7 +43,6 @@
         .info-row { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 15px; color: #555; }
         .count-highlight { color: var(--accent); font-size: 24px; font-weight: 900; font-style: italic; }
         
-        /* 记录列表样式 */
         .record-list { margin-top: 20px; }
         .record-list h4 { font-size: 15px; color: #7f8c8d; margin-bottom: 10px; border-bottom: 1px solid #eee; padding-bottom: 5px; }
         .record-item { display: flex; justify-content: space-between; align-items: center; font-size: 14px; padding: 10px 0; border-bottom: 1px dashed #ecf0f1; }
@@ -46,143 +50,161 @@
         .record-recharge { color: #2e7d32; font-weight: bold; background: #e8f5e9; padding: 2px 6px; border-radius: 4px; font-size: 12px; }
         .record-usage { color: #c62828; font-weight: bold; background: #ffebee; padding: 2px 6px; border-radius: 4px; font-size: 12px; }
 
-        /* 车手名单列表样式 */
-        .customer-list-item { display: flex; justify-content: space-between; align-items: center; padding: 16px 0; border-bottom: 1px solid #f0f0f0; cursor: pointer; transition: background 0.2s; }
-        .customer-list-item:active { background: #f9f9f9; }
+        .customer-list-item { display: flex; justify-content: space-between; align-items: center; padding: 16px 0; border-bottom: 1px solid #f0f0f0; cursor: pointer; }
         .cl-name { font-size: 16px; font-weight: bold; color: #2c3e50; }
         .cl-phone { font-size: 13px; color: #7f8c8d; margin-top: 4px; font-family: monospace; }
         .cl-count { font-size: 20px; font-weight: 900; color: var(--accent); text-align: right; font-style: italic; }
         .cl-action { font-size: 12px; color: var(--primary); margin-top: 4px; font-weight: bold; }
 
-        .tab-bar { position: fixed; bottom: 0; width: 100%; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); display: flex; border-top: 1px solid #e0e0e0; padding-bottom: env(safe-area-inset-bottom); box-shadow: 0 -2px 10px rgba(0,0,0,0.03); }
+        .tab-bar { position: fixed; bottom: 0; width: 100%; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); display: flex; border-top: 1px solid #e0e0e0; padding-bottom: env(safe-area-inset-bottom); display: none; /* 登录前隐藏 */ }
         .tab-item { flex: 1; text-align: center; padding: 12px 0; font-size: 12px; color: #95a5a6; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 4px; }
         .tab-icon { font-size: 20px; }
         .tab-item.active { color: var(--primary); font-weight: bold; }
-        .tab-item.active .tab-icon { transform: scale(1.1); }
 
         .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 15px; }
         .stat-box { background: var(--card-bg); padding: 18px 10px; border-radius: 12px; text-align: center; box-shadow: 0 4px 12px rgba(0,0,0,0.04); }
         .stat-val { font-size: 26px; font-weight: 900; color: var(--primary); margin-top: 8px; font-style: italic; }
+        
+        /* 隐藏主应用区，直到登录成功 */
+        #appContent { display: none; }
     </style>
 </head>
 <body>
 
-    <div class="header-container">
-        <div class="header" id="headerTitle">🏁 Pit区 / 控制台</div>
-        <div class="checkered-bar"></div>
+    <div id="loginView">
+        <div class="login-card">
+            <div class="login-logo">🏎️</div>
+            <div class="login-title">RC 赛道营运系统</div>
+            <p style="color: #7f8c8d; font-size: 14px; margin-bottom: 20px;">请输入技师授权码入场</p>
+            <input type="password" id="authCode" placeholder="授权码 (演示填: 8888)" inputmode="numeric">
+            <button class="btn-primary" onclick="handleLogin()" style="margin-top: 20px;">🔑 认证并启动</button>
+        </div>
     </div>
 
-    <div id="workspaceView" class="container active-view">
-        <div class="card card-red-top">
-            <h3>🔍 呼叫车手档案</h3>
-            <input type="tel" id="phoneInput" placeholder="输入车手手机号 (11位)" maxlength="11">
-            <button class="btn-primary" onclick="handleSearch()">检索资料</button>
+    <div id="appContent">
+        <div class="header-container">
+            <div class="header" id="headerTitle">🏁 Pit区 / 控制台</div>
+            <div class="checkered-bar"></div>
         </div>
 
-        <div id="customerPanel" class="card" style="display: none;">
-            <h3>🏎️ 车手状态</h3>
-            <div class="customer-info">
-                <div class="info-row"><span>车手代号：</span><strong id="cName">-</strong></div>
-                <div class="info-row"><span>联络终端：</span><span id="cPhone" style="font-family: monospace;">-</span></div>
-                <div class="info-row" style="margin-top: 10px; border-top: 1px dashed #ddd; padding-top: 10px;">
-                    <span>剩余可用节数：</span><span id="cCount" class="count-highlight">0</span>
+        <div id="workspaceView" class="container active-view">
+            <div class="card card-red-top">
+                <h3>🔍 呼叫车手档案</h3>
+                <input type="tel" id="phoneInput" placeholder="输入车手手机号 (11位)" maxlength="11">
+                <button class="btn-primary" onclick="handleSearch()">检索资料</button>
+            </div>
+            <div id="customerPanel" class="card" style="display: none;">
+                <h3>🏎️ 车手状态</h3>
+                <div class="customer-info">
+                    <div class="info-row"><span>车手代号：</span><strong id="cName">-</strong></div>
+                    <div class="info-row"><span>联络终端：</span><span id="cPhone" style="font-family: monospace;">-</span></div>
+                    <div class="info-row" style="margin-top: 10px; border-top: 1px dashed #ddd; padding-top: 10px;">
+                        <span>剩余可用节数：</span><span id="cCount" class="count-highlight">0</span>
+                    </div>
+                </div>
+                <div style="display: flex; gap: 12px; margin-top: 20px;">
+                    <button class="btn-play" onclick="deductCount()">🏁 下场发车 (扣次)</button>
+                    <button class="btn-outline" onclick="toggleRecharge()">⛽ 购买票卷</button>
+                </div>
+                <div id="rechargePanel" style="display: none; background: #fff3e0; padding: 15px; border-radius: 8px; margin-top: 15px; border: 1px solid #ffe0b2;">
+                    <h4 style="color: #e65100; margin-bottom: 10px;">进站补给 (充值)</h4>
+                    <input type="number" id="rechargeAmount" placeholder="支付金额 (元)">
+                    <input type="number" id="rechargeCount" placeholder="增加节数/次数">
+                    <button class="btn-primary" onclick="submitRecharge()" style="background: linear-gradient(135deg, #f57c00, #e65100);">确认入账</button>
+                </div>
+                <div class="record-list" id="recordList"></div>
+            </div>
+        </div>
+
+        <div id="customersView" class="container">
+            <div class="card card-red-top">
+                <h3>📝 新秀车手注册</h3>
+                <input type="tel" id="regPhone" placeholder="输入手机号 (必填)" maxlength="11">
+                <input type="text" id="regName" placeholder="输入车手姓名或花名">
+                <button class="btn-primary" onclick="registerCustomer()">建档入库</button>
+            </div>
+            <div class="card">
+                <h3>🏆 围场车手名单</h3>
+                <div id="allCustomersList"></div>
+            </div>
+        </div>
+
+        <div id="statsView" class="container">
+             <div class="card card-red-top">
+                <h3>📅 赛道营运周期筛选</h3>
+                <div style="display: flex; gap: 10px; align-items: center;">
+                    <input type="date" id="startDate">
+                    <span style="color: #7f8c8d; font-weight: bold;">至</span>
+                    <input type="date" id="endDate">
+                </div>
+                <button class="btn-outline" onclick="loadStats()">分析数据</button>
+            </div>
+            <div class="stat-grid">
+                <div class="stat-box" style="grid-column: span 2; background: linear-gradient(135deg, #1e3c72, #2a5298); color: white;">
+                    <div style="color: #bbdefb;">总营收流水 (元)</div>
+                    <div class="stat-val" id="statAmount" style="color: #fff; font-size: 32px;">0.00</div>
+                </div>
+                <div class="stat-box">
+                    <div style="color: #7f8c8d; font-size: 13px;">充值单数</div>
+                    <div class="stat-val" id="statRechargeCount" style="color: #2c3e50;">0</div>
+                </div>
+                <div class="stat-box">
+                    <div style="color: #7f8c8d; font-size: 13px;">下场总人次</div>
+                    <div class="stat-val" id="statUsageCount" style="color: var(--accent);">0</div>
                 </div>
             </div>
-            
-            <div style="display: flex; gap: 12px; margin-top: 20px;">
-                <button class="btn-play" onclick="deductCount()">🏁 下场发车 (扣次)</button>
-                <button class="btn-outline" onclick="toggleRecharge()">⛽ 购买票卷</button>
+        </div>
+
+        <div class="tab-bar" id="bottomTabBar">
+            <div class="tab-item active" onclick="switchTab('workspace')">
+                <span class="tab-icon">⚙️</span><span>Pit区</span>
             </div>
-
-            <div id="rechargePanel" style="display: none; background: #fff3e0; padding: 15px; border-radius: 8px; margin-top: 15px; border: 1px solid #ffe0b2;">
-                <h4 style="color: #e65100; margin-bottom: 10px;">进站补给 (充值)</h4>
-                <input type="number" id="rechargeAmount" placeholder="支付金额 (元)">
-                <input type="number" id="rechargeCount" placeholder="增加节数/次数">
-                <button class="btn-primary" onclick="submitRecharge()" style="background: linear-gradient(135deg, #f57c00, #e65100); box-shadow: 0 4px 10px rgba(245, 124, 0, 0.3);">确认入账</button>
+            <div class="tab-item" onclick="switchTab('customers')">
+                <span class="tab-icon">🏎️</span><span>车手库</span>
             </div>
-
-            <div class="record-list" id="recordList"></div>
-        </div>
-    </div>
-
-    <div id="customersView" class="container">
-        <div class="card card-red-top">
-            <h3>📝 新秀车手注册</h3>
-            <input type="tel" id="regPhone" placeholder="输入手机号 (必填)" maxlength="11">
-            <input type="text" id="regName" placeholder="输入车手姓名或花名">
-            <button class="btn-primary" onclick="registerCustomer()">建档入库</button>
-        </div>
-
-        <div class="card">
-            <h3>🏆 围场车手名单</h3>
-            <div id="allCustomersList"></div>
-        </div>
-    </div>
-
-    <div id="statsView" class="container">
-        <div class="card card-red-top">
-            <h3>📅 赛道营运周期筛选</h3>
-            <div style="display: flex; gap: 10px; align-items: center;">
-                <input type="date" id="startDate">
-                <span style="color: #7f8c8d; font-weight: bold;">至</span>
-                <input type="date" id="endDate">
+            <div class="tab-item" onclick="switchTab('stats')">
+                <span class="tab-icon">📊</span><span>遥测数据</span>
             </div>
-            <button class="btn-outline" onclick="loadStats()">分析数据</button>
-        </div>
-
-        <div class="stat-grid">
-            <div class="stat-box" style="grid-column: span 2; background: linear-gradient(135deg, #1e3c72, #2a5298); color: white;">
-                <div style="color: #bbdefb;">总营收流水 (元)</div>
-                <div class="stat-val" id="statAmount" style="color: #fff; font-size: 32px;">0.00</div>
-            </div>
-            <div class="stat-box">
-                <div style="color: #7f8c8d; font-size: 13px;">充值单数</div>
-                <div class="stat-val" id="statRechargeCount" style="color: #2c3e50;">0</div>
-            </div>
-            <div class="stat-box">
-                <div style="color: #7f8c8d; font-size: 13px;">下场总人次</div>
-                <div class="stat-val" id="statUsageCount" style="color: var(--accent);">0</div>
-            </div>
-        </div>
-    </div>
-
-    <div class="tab-bar">
-        <div class="tab-item active" onclick="switchTab('workspace')">
-            <span class="tab-icon">⚙️</span>
-            <span>Pit区</span>
-        </div>
-        <div class="tab-item" onclick="switchTab('customers')">
-            <span class="tab-icon">🏎️</span>
-            <span>车手库</span>
-        </div>
-        <div class="tab-item" onclick="switchTab('stats')">
-            <span class="tab-icon">📊</span>
-            <span>遥测数据</span>
         </div>
     </div>
 
 <script>
+    // --- 登录验证逻辑 ---
+    function handleLogin() {
+        const code = document.getElementById('authCode').value;
+        // 演示阶段使用前端硬编码，后期接入 Cloudflare Worker 后这里会发起 fetch() 请求验证
+        if (code === '8888') {
+            document.getElementById('loginView').style.display = 'none';
+            document.getElementById('appContent').style.display = 'block';
+            document.getElementById('bottomTabBar').style.display = 'flex';
+            // 登录成功后记录状态，刷新不用重登（真实环境中这里会存 JWT Token）
+            sessionStorage.setItem('isLoggedIn', 'true'); 
+        } else {
+            alert('❌ 授权码错误，拒绝访问！');
+        }
+    }
+
+    // 检查是否已经登录过
+    if (sessionStorage.getItem('isLoggedIn') === 'true') {
+        document.getElementById('loginView').style.display = 'none';
+        document.getElementById('appContent').style.display = 'block';
+        document.getElementById('bottomTabBar').style.display = 'flex';
+    }
+
+    // --- 业务逻辑 (与之前完全相同) ---
     let customers = JSON.parse(localStorage.getItem('rc_customers')) || {};
     let rechargeRecords = JSON.parse(localStorage.getItem('rc_recharges')) || [];
     let usageRecords = JSON.parse(localStorage.getItem('rc_usages')) || [];
     let currentPhone = null;
 
-    // 精确到秒的时间格式化
     function formatTime(timestamp) {
         const d = new Date(timestamp);
-        const year = d.getFullYear();
-        const month = String(d.getMonth()+1).padStart(2,'0');
-        const day = String(d.getDate()).padStart(2,'0');
-        const hours = String(d.getHours()).padStart(2,'0');
-        const minutes = String(d.getMinutes()).padStart(2,'0');
-        const seconds = String(d.getSeconds()).padStart(2,'0'); // 新增秒数
-        return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+        return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')} ${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}:${String(d.getSeconds()).padStart(2,'0')}`;
     }
 
     function handleSearch() {
         const phone = document.getElementById('phoneInput').value.trim();
         if (phone.length !== 11) return alert('请输入完整的11位手机号');
-
         if (customers[phone]) {
             currentPhone = phone;
             showCustomerPanel(customers[phone]);
@@ -195,13 +217,10 @@
     function registerCustomer() {
         const phone = document.getElementById('regPhone').value.trim();
         const name = document.getElementById('regName').value.trim() || '神秘车手';
-
         if (phone.length !== 11) return alert('请输入有效的11位手机号');
         if (customers[phone]) return alert('该通讯频段（手机号）已被注册！');
-
         customers[phone] = { phone, name, count: 0, createTime: Date.now() };
         saveData();
-        
         document.getElementById('regPhone').value = '';
         document.getElementById('regName').value = '';
         alert('新秀车手建档成功！');
@@ -211,25 +230,13 @@
     function renderAllCustomers() {
         const listDiv = document.getElementById('allCustomersList');
         const customerArray = Object.values(customers).sort((a, b) => b.createTime - a.createTime);
-
         if (customerArray.length === 0) {
             listDiv.innerHTML = '<div style="text-align:center; color:#bdc3c7; padding:30px 0;">当前赛道空无一人</div>';
             return;
         }
-
         let html = '';
         customerArray.forEach(c => {
-            html += `
-            <div class="customer-list-item" onclick="jumpToWorkspace('${c.phone}')">
-                <div>
-                    <div class="cl-name">${c.name}</div>
-                    <div class="cl-phone">${c.phone}</div>
-                </div>
-                <div>
-                    <div class="cl-count">${c.count} <span style="font-size:12px;font-style:normal;color:#7f8c8d;">次</span></div>
-                    <div class="cl-action">进入Pit房 &gt;</div>
-                </div>
-            </div>`;
+            html += `<div class="customer-list-item" onclick="jumpToWorkspace('${c.phone}')"><div><div class="cl-name">${c.name}</div><div class="cl-phone">${c.phone}</div></div><div><div class="cl-count">${c.count} <span style="font-size:12px;font-style:normal;color:#7f8c8d;">次</span></div><div class="cl-action">进入Pit房 &gt;</div></div></div>`;
         });
         listDiv.innerHTML = html;
     }
@@ -255,25 +262,17 @@
         const userRecharges = rechargeRecords.filter(r => r.phone === phone).map(r => ({ ...r, type: 'recharge' }));
         const userUsages = usageRecords.filter(u => u.phone === phone).map(u => ({ ...u, type: 'usage' }));
         const combinedRecords = [...userRecharges, ...userUsages].sort((a, b) => b.time - a.time);
-
         if (combinedRecords.length === 0) {
             recordList.innerHTML = '<div style="text-align:center; color:#bdc3c7; font-size:13px; margin-top:20px;">暂无赛道遥测记录</div>';
             return;
         }
-
         let html = '<h4>⏱️ 进站及下场遥测日志</h4>';
         combinedRecords.forEach(record => {
-            const timeStr = formatTime(record.time); // 现在会输出到秒
+            const timeStr = formatTime(record.time);
             if (record.type === 'recharge') {
-                html += `<div class="record-item">
-                            <div><span class="record-recharge">补给票卷</span><br><span class="record-time">${timeStr}</span></div>
-                            <div style="text-align:right;">+${record.addCount} 次<br><span style="color:#7f8c8d;font-size:12px;">(¥${record.amount})</span></div>
-                         </div>`;
+                html += `<div class="record-item"><div><span class="record-recharge">补给票卷</span><br><span class="record-time">${timeStr}</span></div><div style="text-align:right;">+${record.addCount} 次<br><span style="color:#7f8c8d;font-size:12px;">(¥${record.amount})</span></div></div>`;
             } else {
-                html += `<div class="record-item">
-                            <div><span class="record-usage">赛道发车</span><br><span class="record-time">${timeStr}</span></div>
-                            <div style="font-weight:bold;color:#c62828;">-1 次</div>
-                         </div>`;
+                html += `<div class="record-item"><div><span class="record-usage">赛道发车</span><br><span class="record-time">${timeStr}</span></div><div style="font-weight:bold;color:#c62828;">-1 次</div></div>`;
             }
         });
         recordList.innerHTML = html;
@@ -288,7 +287,6 @@
         const amount = parseFloat(document.getElementById('rechargeAmount').value);
         const count = parseInt(document.getElementById('rechargeCount').value);
         if (!amount || !count) return alert('请输入有效的油资(金额)和节数(次数)');
-        
         customers[currentPhone].count += count;
         rechargeRecords.push({ phone: currentPhone, amount, addCount: count, time: Date.now() });
         saveData();
@@ -335,7 +333,6 @@
     function switchTab(tab) {
         document.querySelectorAll('.tab-item').forEach(el => el.classList.remove('active'));
         document.querySelectorAll('.container').forEach(el => el.classList.remove('active-view'));
-        
         if (tab === 'workspace') {
             document.querySelector('.tab-item:nth-child(1)').classList.add('active');
             document.getElementById('workspaceView').classList.add('active-view');
